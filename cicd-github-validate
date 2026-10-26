@@ -1,0 +1,84 @@
+GitHub Actions Validation Report
+==============================
+
+Repository: yashk2712/ci-cd-final-project
+Workflow File: .github/workflows/workflow.yml
+Status: Configured for successful CI execution on push and pull request to main
+
+Workflow summary
+----------------
+
+Name: CI workflow
+
+Triggers:
+- push to main
+- pull_request to main
+
+Job:
+- build
+- Runner: ubuntu-latest
+- Container: python:3.9-slim
+
+Workflow steps
+--------------
+
+1. Checkout
+   - uses: actions/checkout@v3
+
+2. Install dependencies
+   - run: |
+       python -m pip install --upgrade pip
+       pip install -r requirements.txt
+
+3. Lint with flake8
+   - run: |
+       flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+       flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+
+4. Run unit tests with nose
+   - run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+
+Validation outcome
+------------------
+
+This GitHub Actions workflow is designed to pass successfully when all required checks complete without errors:
+- repository is checked out cleanly,
+- project dependencies install correctly,
+- linting passes for the service package,
+- unit tests pass under nose with coverage reporting.
+
+This workflow enforces a simple but effective CI pipeline for the project.
+
+Workflow YAML
+-------------
+
+```yaml
+name: CI workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: python:3.9-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: |
+          flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run unit tests with nose
+        run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+```
