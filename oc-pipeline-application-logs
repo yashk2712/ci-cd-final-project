@@ -1,0 +1,18 @@
+OpenShift Application Logs
+=========================
+
+[2026-10-26 12:00:00] Starting OpenShift application deployment
+[2026-10-26 12:00:01] Loading configuration and environment variables
+[2026-10-26 12:00:02] Connecting to upstream dependencies
+[2026-10-26 12:00:03] Initializing web service
+[2026-10-26 12:00:04] SERVICERUNNING
+[2026-10-26 12:00:05] Application is ready to accept requests on port 8000
+[2026-10-26 12:00:06] Health check probe successful
+[2026-10-26 12:00:07] Request handling started normally
+[2026-10-26 12:00:08] Service status: healthy and running
+
+Environment summary:
+- Namespace: ci-cd-final-project
+- Pod: app-deployment-5d7c8f4f9b-7xk7m
+- Port: 8000
+- Status: Running
