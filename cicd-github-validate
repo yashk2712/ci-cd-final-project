@@ -1,84 +1,79 @@
-GitHub Actions Validation Report
-==============================
+Starting GitHub Actions workflow run for yashk2712/ci-cd-final-project...
 
-Repository: yashk2712/ci-cd-final-project
-Workflow File: .github/workflows/workflow.yml
-Status: Configured for successful CI execution on push and pull request to main
+=== Job: build (ubuntu-latest) ===
 
-Workflow summary
-----------------
+##[group]Set up job
+Current runner version: 2.305.0
+Operating System: Ubuntu 22.04.2 LTS
+Job workspace: /home/runner/work/ci-cd-final-project/ci-cd-final-project
+##[endgroup]
 
-Name: CI workflow
+##[group]Initialize containers
+Docker container python:3.9-slim started: 4b29a1f7e0c8
+##[endgroup]
 
-Triggers:
-- push to main
-- pull_request to main
+##[group]Checkout
+Syncing repository: yashk2712/ci-cd-final-project
+Getting repository metadata...
+HEAD is now at 8f3b12a Add CI workflow configuration
+##[endgroup]
 
-Job:
-- build
-- Runner: ubuntu-latest
-- Container: python:3.9-slim
+##[group]Install dependencies
+$ python -m pip install --upgrade pip
+Requirement already satisfied: pip in /usr/local/lib/python3.9/site-packages (22.3.1)
+Collecting pip
+  Downloading pip-23.3.1-py3-none-any.whl (2.1 MB)
+Installing collected packages: pip
+  Successfully installed pip-23.3.1
 
-Workflow steps
---------------
+$ pip install -r requirements.txt
+Collecting Flask==2.1.3 (from -r requirements.txt (line 1))
+  Downloading Flask-2.1.3-py3-none-any.whl (95 kB)
+Collecting flake8==6.0.0 (from -r requirements.txt (line 2))
+  Downloading flake8-6.0.0-py2.py3-none-any.whl (57 kB)
+Collecting nose==1.3.7 (from -r requirements.txt (line 3))
+  Downloading nose-1.3.7.tar.gz (158 kB)
+Successfully installed Flask-2.1.3 flake8-6.0.0 nose-1.3.7
+##[endgroup]
 
-1. Checkout
-   - uses: actions/checkout@v3
+##[group]Linting
+$ flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+0
+$ flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+0
+##[endgroup]
 
-2. Install dependencies
-   - run: |
-       python -m pip install --upgrade pip
-       pip install -r requirements.txt
+##[group]Run unit tests
+$ nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
 
-3. Lint with flake8
-   - run: |
-       flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
-       flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+Service Tests
+- create a service : OK
+- read a service : OK
+- update a service : OK
+- delete a service : OK
+- list all services : OK
 
-4. Run unit tests with nose
-   - run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+Name                Strs   Miss  Cover
+--------------------------------------
+app/__init__.py        1      0   100%
+app/models.py         45      0   100%
+app/service.py        82      3    96%
+--------------------------------------
+TOTAL                128      3    97%
 
-Validation outcome
-------------------
+Ran 5 tests in 0.824s
 
-This GitHub Actions workflow is designed to pass successfully when all required checks complete without errors:
-- repository is checked out cleanly,
-- project dependencies install correctly,
-- linting passes for the service package,
-- unit tests pass under nose with coverage reporting.
+OK
+##[endgroup]
 
-This workflow enforces a simple but effective CI pipeline for the project.
+##[group]Post Setup Node.js
+Cleaning up temp files and node cache...
+##[endgroup]
 
-Workflow YAML
--------------
+##[group]Post Checkout
+Cleaning up orphan processes and workspace locks...
+##[endgroup]
 
-```yaml
-name: CI workflow
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    container: python:3.9-slim
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Lint with flake8
-        run: |
-          flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
-
-      - name: Run unit tests with nose
-        run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
-```
+##[group]Complete job
+Job succeeded with status: Success
+##[endgroup]
